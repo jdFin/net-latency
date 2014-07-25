@@ -7,6 +7,7 @@ extern int opt_sock;
 extern int opt_tos;
 extern int opt_verbose;
 extern int opt_help;
+extern int opt_prio;
 
 extern void parse_options(int argc, char * const argv[]);
 

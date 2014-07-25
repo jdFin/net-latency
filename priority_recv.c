@@ -8,6 +8,7 @@
 #include <sys/time.h>
 #include <netinet/in.h>
 #include <unistd.h>
+#include <sched.h>
 
 #include "options.h"
 #include "util.h"
@@ -50,6 +51,18 @@ int main(int argc, char *argv[])
 
     if (opt_port == 0)
         opt_port = PRIORITY_PORT_DEFAULT;
+
+    if (opt_prio != 0)
+        {
+        struct sched_param param;
+        memset(&param, 0, sizeof(param));
+        param.sched_priority = opt_prio;
+        if (sched_setscheduler(0, SCHED_RR, &param) != 0)
+            {
+            perror("sched_setscheduler");
+            exit(1);
+            }
+        }
 
     fd = socket(AF_INET, SOCK_DGRAM, 0);
     if (fd == -1)

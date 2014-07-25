@@ -4,29 +4,48 @@
 #include "options.h"
 
 
-/* UDP port to send to or receive on.
- * bulk_send, bulk_recv, priority_send, priority_recv */
+/* -p <port>            UDP port to send to or receive on
+ *                      bulk_send
+ *                      bulk_recv
+ *                      priority_send
+ *                      priority_recv
+ */
 short opt_port = 0;
 
-/* IP address to send to.
- * bulk_send, priority_send */
+/* -i <ip_addr>         IP address to send to
+ *                      bulk_send
+ *                      priority_send
+ */
 char const * opt_ip = NULL;
 
-/* Whether to set socket options.
- * priority_send */
+/* -s                   whether to set socket options
+ *                      priority_send
+ */
 int opt_sock = 0;
 
-/* TOS to set.
- * priority_send */
+/* -t <tos>             TOS to set
+ *                      priority_send
+ */
 int opt_tos = -1;
 
-/* Verbose status output.
- * priority_recv */
+/* -v                   verbose status output
+ *                      priority_recv
+ */
 int opt_verbose = 0;
 
-/* Print help and exit.
- * bulk_send, bulk_recv, priority_send, priority_recv */
+/* -h                   print help and exit
+ *                      bulk_send
+ *                      bulk_recv
+ *                      priority_send
+ *                      priority_recv
+ */
 int opt_help = 0;
+
+/* -r <prio>            real-time priority
+ *                      priority_send
+ *                      priority_recv
+ */
+int opt_prio = 0;
 
 
 
@@ -44,6 +63,9 @@ void parse_options(int argc, char * const argv[])
                 break;
             case 's':
                 opt_sock = 1;
+                break;
+            case 'r':
+                opt_prio = atoi(optarg);
                 break;
             case 'p':
                 opt_port = atoi(optarg);

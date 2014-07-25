@@ -10,6 +10,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <sched.h>
 
 #include "options.h"
 #include "util.h"
@@ -50,6 +51,18 @@ int main(int argc, char *argv[])
 
     if (inet_pton(AF_INET, opt_ip, &dstIp) != 1)
         usage();
+
+    if (opt_prio != 0)
+        {
+        struct sched_param param;
+        memset(&param, 0, sizeof(param));
+        param.sched_priority = opt_prio;
+        if (sched_setscheduler(0, SCHED_RR, &param) != 0)
+            {
+            perror("sched_setscheduler");
+            exit(1);
+            }
+        }
 
     fd = socket(AF_INET, SOCK_DGRAM, 0);
     if (fd == -1)
