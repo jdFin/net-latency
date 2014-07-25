@@ -52,7 +52,7 @@ int opt_prio = 0;
 void parse_options(int argc, char * const argv[])
 {
     char c;
-    char const * opts = "i:sp:t:vh";
+    char const * opts = "i:r:sp:t:vh";
 
     while ((c = getopt(argc, argv, opts)) != -1)
         {
