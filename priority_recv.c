@@ -57,7 +57,8 @@ int main(int argc, char *argv[])
         struct sched_param param;
         memset(&param, 0, sizeof(param));
         param.sched_priority = opt_prio;
-        if (sched_setscheduler(0, SCHED_RR, &param) != 0)
+        /* SCHED_RR introduces lots of jitter */
+        if (sched_setscheduler(0, SCHED_FIFO, &param) != 0)
             {
             perror("sched_setscheduler");
             exit(1);
