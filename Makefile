@@ -1,8 +1,15 @@
-PROGS=priority_send priority_recv bulk_send bulk_recv
+PROGS=sched_test priority_send priority_recv bulk_send bulk_recv
 
 CFLAGS+=-Wall -O2
 
+LFLAGS+=-lrt
+
+$(echo LINK.c)
+
 all: $(PROGS)
+
+sched_test: sched_test.o
+	cc -o $@ $^ -lrt
 
 priority_send: priority_send.o options.o
 	cc -o $@ $^
